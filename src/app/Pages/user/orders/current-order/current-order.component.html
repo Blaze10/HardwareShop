@@ -1,0 +1,65 @@
+<div class="container" *ngIf="!showSpinner">
+  <div class="row center-xs">
+    <div class="col-xs-12 col-sm-12">
+      <h1 class="mat-display-1">Current orders</h1>
+    </div>
+  </div>
+  <div class="row" *ngFor="let order of currentOrders">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <mat-card style="background: whitesmoke">
+        <mat-card-header>
+          <mat-card-title>
+            {{order.userName}}
+          </mat-card-title>
+          <!-- <mat-card-subtitle>
+            Order Id: {{order.orderId}}
+          </mat-card-subtitle> -->
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <p class="with-icon"><mat-icon>phone</mat-icon> &nbsp; &nbsp; {{order.contact}}</p>
+              <p class="with-icon"><mat-icon>place</mat-icon> &nbsp; &nbsp; {{order.address}}</p>
+              <p class="with-icon" style="color: royalblue; font-size: 17px;"><mat-icon>local_shipping</mat-icon> &nbsp; &nbsp; Order Status: {{order.orderStatus}}</p>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <p class="with-icon"><mat-icon>payment</mat-icon> &nbsp; &nbsp; Payment type: {{order.paymentMethod}}</p>
+              <p class="with-icon"><mat-icon>done</mat-icon> &nbsp; &nbsp; Payment status: {{order.paymentStatus}}</p>
+              <p class="with-icon"><mat-icon>money</mat-icon> &nbsp; &nbsp; Total amount: Rs {{order.totalPrice}}</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1" style="margin-top: 10px;" *ngFor="let item of order.orders">
+      <mat-card>
+        <mat-card-content>
+          <div class="row center-xs">
+            <div class="col-xs-12 col-sm-4">
+              <img mat-card-image [src]="item.productImage" style="width: 90%; border-radius: 4px;
+              margin: 10px 0; min-height: 140px; max-height: 140px;">
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <p style="color: black; font-size: 16px;">{{item.productName}}</p>
+              <p>{{item.companyName}}</p>
+              <p>{{item.subCategory}}</p>
+              <p>{{item.mainCategory}}</p>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <p style="color: black; font-size: 16px;">Price : Rs. {{item.price}}</p>
+              <p style="color: black; font-size: 16px;">Quantity : {{item.count}}</p>
+              <p style="color: black; font-size: 16px;">Total : Rs. {{item.total}}</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-xs-12" style="margin: 30px 0;" *ngIf="currentOrders.length > 1">
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</div>
+<div class="container" style="margin-top: 100px;" *ngIf="showSpinner">
+  <mat-spinner style="margin: 0 auto;"></mat-spinner>
+  <p style="text-align: center">Please wait...</p>
+</div>

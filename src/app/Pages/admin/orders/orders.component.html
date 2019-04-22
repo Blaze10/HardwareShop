@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row center-xs">
+    <div class="col-xs-12 col-sm-12">
+      <h1 class="mat-display-1" style="padding: 0; margin: 0;">All Orders</h1>
+    </div>
+    <div class="col-xs-10 col-sm-8" *ngIf="!showSpinner">
+      <mat-form-field style="width: 100%;">
+        <input type="text" matInput placeholder="Search" (keyup)="applyFilter($event.target.value)"
+         autocomplete="off">
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;" [hidden]="showSpinner">
+
+        <!-- Sr no -->
+        <ng-container matColumnDef="srno">
+          <th mat-header-cell *matHeaderCellDef>Sr no</th>
+          <td mat-cell *matCellDef="let element; let i = index;">{{i+1}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- orderId -->
+        <ng-container matColumnDef="orderId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Id</th>
+          <td mat-cell *matCellDef="let element">{{element.orderId}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+         <!-- userName -->
+         <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>User name</th>
+          <td mat-cell *matCellDef="let element">{{element.userName}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+         <!-- Contact -->
+         <ng-container matColumnDef="contact">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
+          <td mat-cell *matCellDef="let element">{{element.contact}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- order status -->
+        <ng-container matColumnDef="orderStatus">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Status</th>
+          <td mat-cell *matCellDef="let element">{{element.orderStatus}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+         <!-- Orderdate -->
+         <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
+          <td mat-cell *matCellDef="let element">{{ element.date | date: 'dd/MM/yyyy'}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- payment mode -->
+        <ng-container matColumnDef="paymentMethod">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Mode</th>
+          <td mat-cell *matCellDef="let element">{{element.paymentMethod}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- payment status -->
+        <ng-container matColumnDef="paymentStatus">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Status</th>
+          <td mat-cell *matCellDef="let element">{{element.paymentStatus}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- details -->
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef>Order Details</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" type="button" (click)="onClickDetails(element)">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- total price -->
+        <ng-container matColumnDef="totalPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+          <td mat-cell *matCellDef="let element">{{element.totalPrice | currency:"₹"}}</td>
+          <td mat-footer-cell *matFooterCellDef style="font-weight: bold;">{{totalSales | currency:"₹"}}</td>
+        </ng-container>
+
+        <!-- Change Status -->
+        <ng-container matColumnDef="changeStatus">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Update Status</th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;">
+            <button mat-icon-button color="primary" (click)="onEditOrder(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" [ngStyle]="{'display': showSpinner? 'none' : ''}"></mat-paginator>
+      <mat-spinner style="margin: 50px auto;" *ngIf="showSpinner"></mat-spinner>
+    </div>
+  </div>
+</div>

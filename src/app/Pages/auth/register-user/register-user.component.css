@@ -1,0 +1,8 @@
+.mat-form-field {
+  width: 100%;
+}
+
+.example-header-image {
+  background-image: url('../../../../assets/register.png');
+  background-size: cover;
+}

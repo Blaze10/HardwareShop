@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>
+  Order Id: {{detailOrder.orderId}}
+</h1>
+<div mat-dialog-content>
+  <div class="row center-xs" *ngFor="let item of detailOrder.orders">
+    <div class="col-xs-12 col-sm-12">
+      <img mat-card-image [src]="item.productImage" style="width: 90%; border-radius: 4px;
+      margin: 10px 0; min-height: 200px; max-height: 200px;">
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <p>{{item.productName}}</p>
+      <p>{{item.companyName}}</p>
+      <p>{{item.subCategory}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <p>Price : Rs. {{item.price}}</p>
+      <p>Quantity : {{item.count}}</p>
+      <p>Total : Rs. {{item.total}}</p>
+    </div>
+    <div class="col-xs-12" *ngIf="detailOrder.orders.length > 1;">
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button type="button" mat-raised-button color="warn" (click)="onCloseDialog()">
+    CLOSE
+  </button>
+</div>

@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>
+  Change Status
+</h1>
+<div mat-dialog-content>
+  <div class="row center-xs">
+    <div class="col-xs-10 col-sm-10" *ngIf="!showSpinner">
+      <mat-form-field>
+        <mat-label>Order Status</mat-label>
+        <mat-select [(ngModel)]="status">
+          <mat-option value="Confirmed">
+            Confirmed
+          </mat-option>
+          <mat-option value="Delivered">
+            Delivered
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-xs-12" style="height: 150px;" *ngIf="showSpinner">
+      <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" type="button" (click)="onSave()">
+    SAVE
+  </button>
+  <button mat-raised-button color="warn" type="button" (click)="onClose()">
+    CLOSE
+  </button>
+</div>

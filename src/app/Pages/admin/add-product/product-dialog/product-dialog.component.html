@@ -1,0 +1,78 @@
+<h1 mat-dialog-title>{{data.mode}} Product</h1>
+<div mat-dialog-content *ngIf="!showSpinner">
+  <form [formGroup]="productForm">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Product name" formControlName="productName" />
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+        <mat-form-field>
+          <mat-label>Main Category</mat-label>
+          <mat-select formControlName="mainCategory" (selectionChange)="getSubCategory()">
+            <mat-option [value]='item.categoryName' *ngFor="let item of mainCategoryList">
+              {{item.categoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-5">
+        <mat-form-field>
+          <mat-label>Sub Category</mat-label>
+          <mat-select formControlName="subCategory">
+            <mat-option [value]="item.categoryName" *ngFor="let item of subCategoryList">
+              {{item.categoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Image URL" formControlName="productImage" />
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1" *ngIf="productForm.get('productImage').value != ''">
+        <img
+          [src]="productForm.get('productImage').value"
+          style="min-height: 250px; max-height: 250px; width: 100%;"
+        />
+      </div>
+      <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+        <mat-form-field>
+          <mat-label>Company</mat-label>
+          <mat-select formControlName="companyName">
+            <mat-option [value]='item.companyName' *ngFor="let item of companyList">
+              {{item.companyName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-5">
+        <mat-form-field>
+          <input matInput type="number" placeholder="Price" formControlName="price">
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+        <mat-form-field>
+          <input type="number" matInput placeholder="Available Stock" formControlName="availableStock">
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-5">
+        <br/>
+        <mat-checkbox formControlName="isAvailable">Available</mat-checkbox>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions align="end" *ngIf="!showSpinner">
+  <button mat-raised-button color="primary" (click)="onCloseDialog()" [disabled]="!productForm.valid">
+    SUBMIT
+  </button>
+  <button mat-raised-button color="warn" (click)="onlyClose()" type="button">
+    CANCEL
+  </button>
+</div>
+<div mat-dialog-content *ngIf="showSpinner" style="height: 130px;">
+  <mat-spinner style="margin: 0 auto;"></mat-spinner>
+</div>

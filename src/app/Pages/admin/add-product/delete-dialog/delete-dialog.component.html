@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Delete {{data.productName}}</h1>
+<div mat-dialog-content *ngIf="!showSpinner">
+  <p>Are you sure ?</p>
+</div>
+<div mat-dialog-actions align="end" *ngIf="!showSpinner">
+  <button type="button" mat-raised-button color="warn" (click)="onDelete()">
+    DELETE
+  </button>
+  <button type="button" mat-raised-button color="primary" (click)="onClose()">
+    CANCEL
+  </button>
+</div>
+<div mat-dialog-content style="height: 150px;" *ngIf="showSpinner">
+  <mat-spinner style="margin: 0 auto;"></mat-spinner>
+</div>

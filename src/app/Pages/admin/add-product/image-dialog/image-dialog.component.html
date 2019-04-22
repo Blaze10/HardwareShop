@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{data.productName}}</h1>
+<div mat-dialog-content>
+  <img [src]="data.imageUrl" style=" min-height: 200px;max-height: 200px; width: 90%; margin-left: 5%;">
+</div>
+<div mat-dialog-actions align="end">
+  <button type="button" mat-raised-button color="primary" (click)="onClose();">
+    CLOSE
+  </button>
+</div>

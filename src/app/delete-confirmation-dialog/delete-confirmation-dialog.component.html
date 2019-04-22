@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>
+  Remove {{data.title}}
+</h1>
+<div mat-dialog-content>
+  {{data.title}} will be removed permanently.
+</div>
+<div mat-dialog-actions align="end">
+  <button type="button" mat-raised-button mat-dialog-close="Cancel">
+    CLOSE
+  </button>
+  <button type="button" mat-raised-button color="warn" mat-dialog-close="Confirm">
+    DELETE
+  </button>
+</div>

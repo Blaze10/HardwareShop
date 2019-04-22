@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>
+  {{data.Product.productName}}
+</h1>
+<div mat-dialog-content>
+  <form  [formGroup]="cartItemForm">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <img [src]="cartItemForm.get('productImage').value" style="min-height: 200px; max-height: 200px;
+         width: 100%; border-radius: 5px">
+      </div>
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1" style="margin-top: 20px;">
+        <br/>
+        <mat-chip-list>
+          <mat-chip color="primary" style="color: white;" selected>{{cartItemForm.get('companyName').value}}</mat-chip>
+          <mat-chip color="primary" style="color: white;" selected>{{cartItemForm.get('mainCategory').value}}</mat-chip>
+          <mat-chip color="primary" style="color: white;" selected>{{cartItemForm.get('subCategory').value}}</mat-chip>
+        </mat-chip-list>
+      </div>
+      <div class="col-xs-6 col-sm-5 col-sm-offset-1" style="margin-top: 20px;">
+        <mat-form-field>
+          <input type="text" matInput readonly placeholder="Product price" formControlName="price">
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6 col-sm-5" style="margin-top: 20px;">
+        <mat-form-field>
+          <input type="number" matInput min="1" placeholder="Quantity" formControlName="count" (keyup)="calcTotal()"
+          (change)="calcTotal()">
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <mat-form-field>
+          <input type="text" matInput readonly placeholder="Total Price" formControlName="total">
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" type="button" [disabled]="!cartItemForm.valid" (click)="onAdd();">
+    ADD
+  </button>
+  <button mat-raised-button color="warn" type="button" (click)="onCancel();">
+      CANCEL
+  </button>
+</mat-dialog-actions>

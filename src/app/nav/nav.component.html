@@ -1,0 +1,146 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  >
+    <mat-toolbar *ngIf="!authService.isLoggedIn()">Menu</mat-toolbar>
+    <mat-toolbar *ngIf="authService.isLoggedIn()">{{userEmail}}</mat-toolbar>
+    <mat-nav-list>
+      <a
+        mat-list-item
+        [routerLink]="['/home']"
+        routerLinkActive="active"
+        (click)="drawer.toggle()"
+      >
+        <mat-icon>home</mat-icon> Home
+      </a>
+
+
+      <a mat-list-item [matMenuTriggerFor]="hardwareMenu">
+        <mat-icon>memory</mat-icon> Hardware
+        <mat-icon style="float: right;">arrow_right</mat-icon>
+      </a>
+      <mat-menu #hardwareMenu>
+        <button mat-menu-item (click)="drawer.toggle()" [routerLink]="['/Motherboard']" roterLinkActive="active">
+          <mat-icon>developer_board</mat-icon> Motherboards
+        </button>
+        <button mat-menu-item (click)="drawer.toggle()" [routerLink]="['/Processor']" roterLinkActive="active">
+          <mat-icon>memory</mat-icon> Processors
+        </button>
+        <button mat-menu-item (click)="drawer.toggle()" [routerLink]="['/Graphics Card']" roterLinkActive="active">
+          <mat-icon>videogame_asset</mat-icon> Graphic Cards
+        </button>
+      </mat-menu>
+
+
+      <a mat-list-item [matMenuTriggerFor]="gamingsolMenu">
+        <mat-icon>games</mat-icon> Gaming Kit
+        <mat-icon style="float: right;">arrow_right</mat-icon>
+      </a>
+      <mat-menu #gamingsolMenu>
+        <button mat-menu-item (click)="drawer.toggle()" [routerLink]="['/Gaming Keyboard']" roterLinkActive="active">
+          <mat-icon>keyboard</mat-icon> Gaming Keyboard
+        </button>
+        <button mat-menu-item (click)="drawer.toggle()" [routerLink]="['/Gaming Mouse']" roterLinkActive="active">
+          <mat-icon>mouse</mat-icon> Gaming Mouse
+        </button>
+        <button mat-menu-item (click)="drawer.toggle()" [routerLink]="['/Gaming Headset']" roterLinkActive="active">
+          <mat-icon>headset_mic</mat-icon> Gaming Headset
+        </button>
+      </mat-menu>
+
+      <a mat-list-item [routerLink]="['/cart']" routerLinkActive="active" (click)="drawer.toggle();" *ngIf="authService.isLoggedIn() && authService.isUserLoggedIn()">
+        <mat-icon>shopping_cart</mat-icon>Cart
+      </a>
+
+      <a mat-list-item [matMenuTriggerFor]="ordersMenu" *ngIf="authService.isUserLoggedIn()">
+        <mat-icon>equalizer</mat-icon> My Orders
+        <mat-icon style="float: right;">arrow_right</mat-icon>
+      </a>
+      <mat-menu #ordersMenu>
+        <button mat-menu-item [routerLink]="['/current-orders']" routerLinkActive="active" (click)="drawer.toggle();" >
+          <mat-icon>local_shipping</mat-icon> Current Orders
+        </button>
+        <button mat-menu-item [routerLink]="['/all-orders']" routerLinkActive="active" (click)="drawer.toggle()">
+          <mat-icon>watch_later</mat-icon> All Orders
+        </button>
+      </mat-menu>
+
+      <!-- Admin -->
+
+      <a mat-list-item [routerLink]="['/add-product']" routerLinkActive="active" (click)="drawer.toggle();" *ngIf="authService.isLoggedIn() &&
+      authService.isAdminLoggedIn()">
+        <mat-icon>toys</mat-icon>Products
+      </a>
+
+      <a mat-list-item [routerLink]="['/admin-orders']" routerLinkActive="active" (click)="drawer.toggle();" *ngIf="authService.isLoggedIn() &&
+      authService.isAdminLoggedIn()">
+        <mat-icon>local_shipping</mat-icon> All Orders
+      </a>
+
+      <a mat-list-item [routerLink]="['/user-list']" routerLinkActive="active" (click)="drawer.toggle();" *ngIf="authService.isLoggedIn() &&
+      authService.isAdminLoggedIn()">
+        <mat-icon>people</mat-icon> All Users
+      </a>
+
+
+        <!-- Admin -->
+
+
+      <a mat-list-item [routerLink]="['/login']" routerLinkActive="active" (click)="drawer.toggle()" *ngIf="!authService.isLoggedIn()">
+         <mat-icon>exit_to_app</mat-icon> Login
+      </a>
+      <a mat-list-item [routerLink]="['/register']" routerLinkActive="active" *ngIf="!authService.isLoggedIn()" (click)="drawer.toggle()">
+         <mat-icon>person_add</mat-icon> Register
+      </a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" (click)="authService.logout();drawer.toggle();">
+        <mat-icon>power_settings_new</mat-icon> Logout
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+      >
+        <mat-icon aria-label="Side nav toggle icon" class="white-icon">menu</mat-icon>
+      </button>
+      <span class="white-icon">Core</span>
+      <span class="spacer" style="flex: 1 1 auto;"></span>
+
+      <!-- <span *ngIf="isHandset$"> {{userEmail}}&nbsp;&nbsp;</span> -->
+
+      <button mat-icon-button [matMenuTriggerFor]="loginMenu" *ngIf="!authService.isLoggedIn()">
+        <mat-icon class="white-icon">person</mat-icon>
+      </button>
+      <mat-menu #loginMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/login']" routerLinkActive="active" >
+          <mat-icon>exit_to_app</mat-icon> Login
+        </button>
+        <button mat-menu-item [routerLink]="['/register']" routerLinkActive="active" >
+          <mat-icon>person_add</mat-icon> Register
+        </button>
+      </mat-menu>
+
+      <button mat-icon-button type="button" *ngIf="authService.isUserLoggedIn()" (click)="onHomeClick()">
+        <mat-icon class="white-icon">home</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" *ngIf="authService.isUserLoggedIn()" (click)="onClickCart()">
+        <mat-icon *ngIf="cartCount === 0" class="white-icon">shopping_cart</mat-icon>
+        <mat-icon  matBadge="{{cartCount}}" matBadgeColor="accent" *ngIf="cartCount > 0">shopping_cart</mat-icon>
+      </button>
+
+      <button mat-icon-button *ngIf="authService.isLoggedIn()" (click)="authService.logout();">
+        <mat-icon class="white-icon">power_settings_new</mat-icon>
+      </button>
+
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title align="center">
+            <h2 class="mat-display-1">Cart</h2>
+          </mat-card-title>
+          <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content *ngIf="cartItems.length > 0">
+          <div class="row middle-sm center-xs" *ngFor="let item of cartItems; let i = index;">
+            <div class="col-xs-12 col-sm-2">
+              <img [src]="item.productImage" style="min-height: 150px;max-height: 150px;border-radius: 8px;width: 100%;
+              margin: 10px 0;">
+            </div>
+            <div class="col-xs-6 col-sm-3">
+              <h3>{{item.productName}}</h3>
+            </div>
+            <div class="col-xs-6 col-sm-2">
+              <h3>Price: {{item.price}}</h3>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+              <h3>Quantity: {{item.count}}</h3>
+            </div>
+            <div class="col-xs-3 col-sm-1">
+              <button mat-icon-button color="warn" type="button" style="margin-top: 5px;" (click)="onRemoveItem(i)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </div>
+            <div class="col-xs-5 col-sm-2">
+              <h3>Total: Rs. {{item.total}}</h3>
+            </div>
+            <div class="col-xs-12">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+          <div class="row middle-sm center-xs">
+            <div class="col-xs-12 col-sm-2 col-sm-offset-10">
+              <h3>Cart total : Rs. {{cartTotal}}</h3>
+            </div>
+            <div class="col-xs-12">
+              <mat-divider></mat-divider>
+            </div>
+            <div class="col-xs-12 col-sm-12">
+              <h2>Customer Info</h2>
+            </div>
+          </div>
+          <form [formGroup]="ordersForm">
+            <div class="row" *ngIf="!showLoader">
+              <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Name" readonly formControlName="userName">
+                  <mat-icon matSuffix>account_circle</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-5">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Contact" readonly formControlName="contact">
+                  <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <mat-form-field>
+                  <textarea type="text" matInput placeholder="Address" formControlName="address"></textarea>
+                  <mat-icon matSuffix>place</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <mat-radio-group aria-label="Select an option" formControlName="paymentMethod" (change)="onPaymentMethod()">
+                  <mat-radio-button value="Cash Payment">Cash Payment</mat-radio-button>
+                  <mat-radio-button value="Card Payment">Card Payment</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div class="col-xs-12" style="margin: 10px 0;" *ngIf="ordersForm.get('paymentMethod').value === 'Card Payment'">
+                <mat-divider></mat-divider>
+              </div>
+              <div class="col-xs-12 col-sm-4 col-sm-offset-1" *ngIf="ordersForm.get('paymentMethod').value === 'Card Payment'">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Card number" formControlName="cardNumber">
+                  <mat-icon matSuffix>credit_card</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-2" *ngIf="ordersForm.get('paymentMethod').value === 'Card Payment'">
+                <mat-form-field>
+                  <input type="password" matInput placeholder="CVV" formControlName="cvv">
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" *ngIf="showLoader">
+              <div class="col-xs-12">
+                <mat-spinner style="margin: 0 auto;"></mat-spinner>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-content *ngIf="cartItems.length === 0">
+          <div class="row middle-xs center-xs">
+            <div class="col-xs-12">
+              <mat-card-title>Your Shopping cart is empty.</mat-card-title>
+              <mat-card-subtitle>Please add something to your cart to continue shopping.</mat-card-subtitle>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end" *ngIf="cartItems.length > 0 && !showLoader">
+          <button mat-raised-button type="button" color="primary" [disabled]="!ordersForm.valid" (click)="onSubmit()">
+            CHECKOUT
+          </button>
+          <button mat-raised-button type="button" color="warn" (click)="onClearCart();">
+            CLEAR CART
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

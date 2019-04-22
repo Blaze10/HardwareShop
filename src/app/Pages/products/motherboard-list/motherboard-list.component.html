@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row center-xs">
+    <div class="col-xs-12">
+      <h1 class="mat-display-1">{{pageUrl}}</h1>
+    </div>
+  </div>
+  <div class="row center-xs">
+      <div class="col-xs-12 col-sm-12">
+          <div class="row" *ngIf="!showSpinner">
+            <div class="col-xs-12 col-sm-4" style="margin-top: 20px; margin-bottom: 20px;" *ngFor="let product of productList" >
+              <mat-card style="width: 80%; margin-left: 10%;">
+                <img mat-card-image [src]="product.productImage" [alt]="product.productName" style="min-height: 200px; max-height: 200px;">
+                <mat-card-header>
+                  <mat-card-title>
+                    {{product.productName}}
+                    <mat-chip-list>
+                        <mat-chip color="primary" style="color: white;" selected>{{product.companyName}}</mat-chip>
+                        <mat-chip color="primary" style="color: white;"  selected>{{product.subCategory}}</mat-chip>
+                    </mat-chip-list>
+                  </mat-card-title>
+                  <!-- <mat-card-subtitle align="end" style="color: black; font-weight: bold;">Rs. 50,000</mat-card-subtitle> -->
+                </mat-card-header>
+                <mat-card-content>
+                  <h3 style="text-align: right; font-weight: bold;" class="display-1">Rs. {{product.price | currency:"₹" }}</h3>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <div matTooltip="Login to start shopping." [matTooltipDisabled]="authService.isUserLoggedIn()" matTooltipClass="example-tooltip-red">
+                        <button mat-button color="accent" [disabled]="!authService.isUserLoggedIn()" (click)="addToCart(product)">
+                          Add to Cart
+                        </button>
+                    </div>
+                </mat-card-actions>
+              </mat-card>
+            </div>
+          </div>
+          <div class="row" *ngIf="showSpinner">
+            <mat-spinner style="margin: 0 auto;"></mat-spinner>
+          </div>
+        </div>
+  </div>
+</div>
